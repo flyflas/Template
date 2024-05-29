@@ -1,0 +1,15 @@
+server:
+  host: 127.0.0.1
+  port: 8081
+
+gorm:
+  host: 
+  port: 
+  username: 
+  password: 
+  database: 
+
+jwt:
+  secret: 
+  expire: 
+  issuer: 
