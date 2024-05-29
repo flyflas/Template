@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="icu.xiaobai.librarydemo.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="icu.xiaobai.librarydemo.entity.User">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="age" column="age" jdbcType="TINYINT"/>
+            <result property="gender" column="gender" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="registerDate" column="register_date" jdbcType="TIMESTAMP"/>
+            <result property="userStatus" column="user_status" jdbcType="TINYINT"/>
+            <result property="statusReason" column="status_reason" jdbcType="VARCHAR"/>
+            <result property="balance" column="balance" jdbcType="DECIMAL"/>
+            <result property="modifiedDate" column="modified_date" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,username,password,
+        age,gender,email,
+        phone,register_date,user_status,
+        status_reason,balance,modified_date,
+        is_deleted
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where  user_id = #{userId,jdbcType=BIGINT} 
+    </select>
+
+    <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where  email = #{email,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from user
+        where  user_id = #{userId,jdbcType=BIGINT} 
+    </delete>
+
+    <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="icu.xiaobai.librarydemo.entity.User" useGeneratedKeys="true">
+        insert into user
+        ( user_id,username,password
+        ,age,gender,email
+        ,phone,register_date,user_status
+        ,status_reason,balance,modified_date
+        ,is_deleted)
+        values (#{userId,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}
+        ,#{age,jdbcType=TINYINT},#{gender,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}
+        ,#{phone,jdbcType=VARCHAR},#{registerDate,jdbcType=TIMESTAMP},#{userStatus,jdbcType=TINYINT}
+        ,#{statusReason,jdbcType=VARCHAR},#{balance,jdbcType=DECIMAL},#{modifiedDate,jdbcType=TIMESTAMP}
+        ,#{isDeleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="icu.xiaobai.librarydemo.entity.User" useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="userId != null">user_id,</if>
+                <if test="username != null">username,</if>
+                <if test="password != null">password,</if>
+                <if test="age != null">age,</if>
+                <if test="gender != null">gender,</if>
+                <if test="email != null">email,</if>
+                <if test="phone != null">phone,</if>
+                <if test="registerDate != null">register_date,</if>
+                <if test="userStatus != null">user_status,</if>
+                <if test="statusReason != null">status_reason,</if>
+                <if test="balance != null">balance,</if>
+                <if test="modifiedDate != null">modified_date,</if>
+                <if test="isDeleted != null">is_deleted,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="userId != null">#{userId,jdbcType=BIGINT},</if>
+                <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+                <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+                <if test="age != null">#{age,jdbcType=TINYINT},</if>
+                <if test="gender != null">#{gender,jdbcType=VARCHAR},</if>
+                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+                <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+                <if test="registerDate != null">#{registerDate,jdbcType=TIMESTAMP},</if>
+                <if test="userStatus != null">#{userStatus,jdbcType=TINYINT},</if>
+                <if test="statusReason != null">#{statusReason,jdbcType=VARCHAR},</if>
+                <if test="balance != null">#{balance,jdbcType=DECIMAL},</if>
+                <if test="modifiedDate != null">#{modifiedDate,jdbcType=TIMESTAMP},</if>
+                <if test="isDeleted != null">#{isDeleted,jdbcType=TINYINT},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="icu.xiaobai.librarydemo.entity.User">
+        update user
+        <set>
+                <if test="username != null">
+                    username = #{username,jdbcType=VARCHAR},
+                </if>
+                <if test="password != null">
+                    password = #{password,jdbcType=VARCHAR},
+                </if>
+                <if test="age != null">
+                    age = #{age,jdbcType=TINYINT},
+                </if>
+                <if test="gender != null">
+                    gender = #{gender,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null">
+                    email = #{email,jdbcType=VARCHAR},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone,jdbcType=VARCHAR},
+                </if>
+                <if test="registerDate != null">
+                    register_date = #{registerDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="userStatus != null">
+                    user_status = #{userStatus,jdbcType=TINYINT},
+                </if>
+                <if test="statusReason != null">
+                    status_reason = #{statusReason,jdbcType=VARCHAR},
+                </if>
+                <if test="balance != null">
+                    balance = #{balance,jdbcType=DECIMAL},
+                </if>
+                <if test="modifiedDate != null">
+                    modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+                </if>
+                <if test="isDeleted != null">
+                    is_deleted = #{isDeleted,jdbcType=TINYINT},
+                </if>
+        </set>
+        where   user_id = #{userId,jdbcType=BIGINT} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="icu.xiaobai.librarydemo.entity.User">
+        update user
+        set 
+            username =  #{username,jdbcType=VARCHAR},
+            password =  #{password,jdbcType=VARCHAR},
+            age =  #{age,jdbcType=TINYINT},
+            gender =  #{gender,jdbcType=VARCHAR},
+            email =  #{email,jdbcType=VARCHAR},
+            phone =  #{phone,jdbcType=VARCHAR},
+            register_date =  #{registerDate,jdbcType=TIMESTAMP},
+            user_status =  #{userStatus,jdbcType=TINYINT},
+            status_reason =  #{statusReason,jdbcType=VARCHAR},
+            balance =  #{balance,jdbcType=DECIMAL},
+            modified_date =  #{modifiedDate,jdbcType=TIMESTAMP},
+            is_deleted =  #{isDeleted,jdbcType=TINYINT}
+        where   user_id = #{userId,jdbcType=BIGINT} 
+    </update>
+</mapper>

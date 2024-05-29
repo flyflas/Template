@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/librarydb
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: icu.xiaobai.practice.entity
+
+jwt:
+  issuer: admin@xiaobai.icu
+  expire-time: 2
+
