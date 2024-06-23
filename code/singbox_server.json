@@ -1,0 +1,82 @@
+{
+    "log": {
+        "disabled": false,
+        "level": "debug",
+        "output": "/var/log/singbox/box.log",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_resolver",
+                "address": "8.8.8.8",
+                "strategy": "ipv4_only",
+                "detour": "direct"
+            },
+            {
+                "tag": "block",
+                "address": "rcode://success"
+            }
+        ],
+        "rules": [
+            {
+                "inbound": [
+
+                ],
+                "server": "dns_resolver"
+            }
+        ],
+        "reverse_mapping": false,
+        "disable_cache": false,
+        "disable_expire": false,
+        "strategy": "ipv4_only",
+        "independent_cache": true,
+        "final": "dns_resolver"
+    },
+    "experimental": {
+        "cache_file": {
+            "enabled": true,
+            "path": "cache.db",
+            "store_fakeip": false
+        }
+    },
+    "inbounds": [
+
+    ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct",
+            "domain_strategy": "prefer_ipv4",
+            "fallback_delay": "300ms"
+        },
+        {
+            "type": "direct",
+            "tag": "IPv4",
+            "domain_strategy": "ipv4_only"
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
+        }
+    ],
+    "route": {
+        "final": "direct",
+        "rules": [
+            {
+                "protocol": "dns",
+                "outbound": "dns-out"
+            },
+            {
+                "ip_is_private": true,
+                "outbound": "block"
+            }
+        ],
+        "rule_set": [
+        ]
+    }
+}
